@@ -1,0 +1,21 @@
+{
+  "ModId": "quakeenhanced.mod.quakereloaded",
+  "ModName": "QuakeReloaded",
+  "ModAuthor": "JPiolho",
+  "ModVersion": "1.0.0",
+  "ModDescription": "A core library that contains a lot of useful things for other mods",
+  "ModDll": "QuakeReloaded.dll",
+  "ModIcon": "Preview.png",
+  "ModR2RManagedDll32": "x86/QuakeReloaded.dll",
+  "ModR2RManagedDll64": "x64/QuakeReloaded.dll",
+  "ModNativeDll32": "",
+  "ModNativeDll64": "",
+  "IsLibrary": true,
+  "ReleaseMetadataFileName": "QuakeReloaded.ReleaseMetadata.json",
+  "PluginData": {},
+  "IsUniversalMod": false,
+  "ModDependencies": [ "reloaded.sharedlib.hooks", "Reloaded.Memory.SigScan.ReloadedII" ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [ "quake_x64_steam.exe" ],
+  "ProjectUrl": ""
+}
