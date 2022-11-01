@@ -35,7 +35,6 @@ jobs:
       run:
         shell: pwsh
         
-  
     steps:
       # Fetch latest code
       - uses: actions/checkout@v3
@@ -54,6 +53,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
+          
+      # Install Nuget
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.1.1
       
       - name: Setup AutoChangelog
         run: npm install -g auto-changelog
@@ -86,14 +89,10 @@ jobs:
       - name: "Interfaces: Build"
         working-directory: ${{ env.PATH_INTERFACES }}
         run: dotnet build --configuration Release
-        
-      - name: create-7z-action
-        uses: DuckSoft/create-7z-action@v1.0
-        with:
-          # file/folder path to compress
-          pathSource: ${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/*
-          # 7z archive path to write
-          pathTarget: ${{ env.PUBLISH_GITHUB_PATH }}/QuakeReloaded.Interfaces_${{ env.RELEASE_TAG }}.7z
+      
+      - name: "Interfaces: Publish to Nuget"
+        working-directory: ${{ env.PATH_INTERFACES }}
+        run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
       
       - name: Upload GitHub Release Artifact
         uses: actions/upload-artifact@v3.1.1
