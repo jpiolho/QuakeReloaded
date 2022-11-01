@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>QuakeReloaded.Interfaces</Title>
+    <Authors>JPiolho</Authors>
+    <PackageProjectUrl>https://github.com/jpiolho/QuakeReloaded</PackageProjectUrl>
+    <PackageIcon>Preview.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\QuakeReloaded\Preview.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
