@@ -11,7 +11,6 @@ name: Build and Publish Reloaded Mod
 
 on:
   push:
-    branches: [ "main" ]
     tags:
       - '*'
   workflow_dispatch:
@@ -80,11 +79,11 @@ jobs:
             -GitHubUserName "$env:GITHUB_REPOSITORY_OWNER" `
             -GitHubRepoName "$env:GITHUB_REPOSITORY"
       
-      - name: Interfaces: Restore
+      - name: "Interfaces: Restore"
         working-directory: ${{ env.PATH_INTERFACES }}
         run: dotnet restore
         
-      - name: Build interfaces
+      - name: "Interfaces: Build"
         working-directory: ${{ env.PATH_INTERFACES }}
         run: dotnet build --configuration Release
         
