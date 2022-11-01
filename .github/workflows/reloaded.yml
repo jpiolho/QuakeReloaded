@@ -62,10 +62,10 @@ jobs:
         run: |
           [System.IO.Directory]::CreateDirectory("$env:PUBLISH_PATH")
           if ($env:IS_RELEASE -eq 'true') {
-              auto-changelog --sort-commits date --hide-credit --template keepachangelog --commit-limit false --starting-version "$env:RELEASE_TAG" --output "$env:PUBLISH_CHANGELOG_PATH"
+              auto-changelog --sort-commits date --hide-credit --template compact --commit-limit false --starting-version "$env:RELEASE_TAG" --output "$env:PUBLISH_CHANGELOG_PATH"
           }
           else {
-              auto-changelog --sort-commits date --hide-credit --template keepachangelog --commit-limit false --unreleased --output "$env:PUBLISH_CHANGELOG_PATH"
+              auto-changelog --sort-commits date --hide-credit --template compact --commit-limit false --unreleased --output "$env:PUBLISH_CHANGELOG_PATH"
           }
       
       - name: Build mod
@@ -91,9 +91,9 @@ jobs:
         uses: DuckSoft/create-7z-action@v1.0
         with:
           # file/folder path to compress
-          pathSource: ${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0
+          pathSource: ${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/*
           # 7z archive path to write
-          pathTarget: ${{ env.PUBLISH_GITHUB_PATH }}/QuakeReloaded.Interfaces.7z
+          pathTarget: ${{ env.PUBLISH_GITHUB_PATH }}/QuakeReloaded.Interfaces_${{ env.RELEASE_TAG }}.7z
       
       - name: Upload GitHub Release Artifact
         uses: actions/upload-artifact@v3.1.1
