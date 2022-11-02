@@ -55,7 +55,7 @@ jobs:
       run: mv "index.md" "api.md"
     
     - name: Copy dynamic documentation to static documentation folder
-      run: mv "${{ env.GENERATED_DOC_PATH }}/*.*" "./docs"
+      run: mv "${{ env.GENERATED_DOC_PATH }}"/* ./docs
       
     - name: Build Jekyll for GitHub Pages
       uses: actions/jekyll-build-pages@v1.0.6
