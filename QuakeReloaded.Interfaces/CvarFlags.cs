@@ -4,9 +4,15 @@ using System.Text;
 
 namespace QuakeReloaded.Interfaces
 {
+    /// <summary>
+    /// Specifies the property flags of a cvar
+    /// </summary>
     [Flags]
     public enum CvarFlags : int
     {
+        /// <summary>
+        /// No flags
+        /// </summary>
         None = 0,
         
         /// <summary>
