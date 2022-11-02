@@ -17,7 +17,9 @@ concurrency:
   cancel-in-progress: true
   
 env:
-  PUBLISH_DOCUMENTATION_PATH: ./Publish/Docs
+  PUBLISH_DOC_PATH: ./Publish/Docs
+  GENERATED_DOC_PATH: ./Docs
+  
   PATH_INTERFACES: ./QuakeReloaded.Interfaces
   
 jobs:
@@ -46,12 +48,18 @@ jobs:
       run: dotnet build --configuration Release
       
     - name: Generate Documentation
-      run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.PUBLISH_DOCUMENTATION_PATH }}"
+      run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.GENERATED_DOC_PATH }}"
       
+    - name: Build Jekyll for GitHub Pages
+      uses: actions/jekyll-build-pages@v1.0.6
+      with:
+        source: ${{ env.GENERATED_DOC_PATH }}
+        destination: ${{ env.PUBLISH_DOC_PATH }}
+        
     - name: Upload documentation artifact
       uses: actions/upload-pages-artifact@v1.0.4
       with:
-        path: ${{env.PUBLISH_DOCUMENTATION_PATH }}
+        path: ${{env.PUBLISH_DOC_PATH }}
         
   # Deployment job
   deploy:
