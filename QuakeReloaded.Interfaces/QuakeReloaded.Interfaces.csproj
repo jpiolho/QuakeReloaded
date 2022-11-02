@@ -6,15 +6,9 @@
     <Title>QuakeReloaded.Interfaces</Title>
     <Authors>JPiolho</Authors>
     <PackageProjectUrl>https://github.com/jpiolho/QuakeReloaded</PackageProjectUrl>
-    <PackageIcon>Preview.png</PackageIcon>
+    <PackageIcon></PackageIcon>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\QuakeReloaded\Preview.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>embedded</DebugType>
   </PropertyGroup>
