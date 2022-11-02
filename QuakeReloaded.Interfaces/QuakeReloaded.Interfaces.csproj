@@ -5,9 +5,11 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>QuakeReloaded.Interfaces</Title>
     <Authors>JPiolho</Authors>
-    <PackageProjectUrl>https://github.com/jpiolho/QuakeReloaded</PackageProjectUrl>
+    <PackageProjectUrl>https://jpiolho.github.io/QuakeReloaded/</PackageProjectUrl>
     <PackageIcon></PackageIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Description>Interfaces exposed by QuakeReloaded API</Description>
+    <RepositoryUrl>https://github.com/jpiolho/QuakeReloaded</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
