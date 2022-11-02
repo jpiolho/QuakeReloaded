@@ -97,7 +97,7 @@ jobs:
             -GitHubRepoName "$env:GITHUB_REPOSITORY"
       
       - name: Generate Documentation
-        run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.PUBLISH_DOCUMENTATION_PATH }}
+        run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.PUBLISH_DOCUMENTATION_PATH }}"
       
       - name: "Interfaces: Publish to Nuget"
         working-directory: ${{ env.PATH_INTERFACES }}
