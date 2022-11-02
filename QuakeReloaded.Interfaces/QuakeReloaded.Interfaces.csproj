@@ -7,6 +7,7 @@
     <Authors>JPiolho</Authors>
     <PackageProjectUrl>https://github.com/jpiolho/QuakeReloaded</PackageProjectUrl>
     <PackageIcon></PackageIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
