@@ -1,11 +1,12 @@
 # Script to build and publish a Reloaded Mod based on script from Sewer56.
 
-# Produces: 
-#   - Build to Upload to GitHub
+# Produces when pushing a tag: 
+#   - Build mod
+#   - Build interfaces
 #   - Changelog
-
-# When pushing a tag
-#   - Upload to GitHub Releases
+#   - Interfaces documentation
+#   - Uploads mod to Github as release
+#   - Uploads interfaces to Nuget
 
 name: Build and Publish Reloaded Mod
 
@@ -19,6 +20,7 @@ env:
   PUBLISH_COMMON_PATH: ./Publish/ToUpload/
   PUBLISH_GITHUB_PATH: ./Publish/ToUpload/Generic
   PUBLISH_CHANGELOG_PATH: ./Publish/Changelog.md
+  PUBLISH_DOCUMENTATION_PATH: ./Publish/Docs
   PUBLISH_PATH: ./Publish
   
   PATH_INTERFACES: ./QuakeReloaded.Interfaces
@@ -60,6 +62,10 @@ jobs:
       
       - name: Setup AutoChangelog
         run: npm install -g auto-changelog
+        
+      # Install xmldoc tool
+      - name: Setup XMLDoc2Markdown
+        run: dotnet tool install -g XMLDoc2Markdown
       
       - name: Create Changelog
         run: |
@@ -70,6 +76,14 @@ jobs:
           else {
               auto-changelog --sort-commits date --hide-credit --template compact --commit-limit false --unreleased --output "$env:PUBLISH_CHANGELOG_PATH"
           }
+      
+      - name: "Interfaces: Restore"
+        working-directory: ${{ env.PATH_INTERFACES }}
+        run: dotnet restore
+        
+      - name: "Interfaces: Build"
+        working-directory: ${{ env.PATH_INTERFACES }}
+        run: dotnet build --configuration Release
       
       - name: Build mod
         run: |
@@ -82,13 +96,8 @@ jobs:
             -GitHubUserName "$env:GITHUB_REPOSITORY_OWNER" `
             -GitHubRepoName "$env:GITHUB_REPOSITORY"
       
-      - name: "Interfaces: Restore"
-        working-directory: ${{ env.PATH_INTERFACES }}
-        run: dotnet restore
-        
-      - name: "Interfaces: Build"
-        working-directory: ${{ env.PATH_INTERFACES }}
-        run: dotnet build --configuration Release
+      - name: Generate Documentation
+        run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.PUBLISH_DOCUMENTATION_PATH }}
       
       - name: "Interfaces: Publish to Nuget"
         working-directory: ${{ env.PATH_INTERFACES }}
@@ -110,6 +119,11 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: ${{ env.PUBLISH_CHANGELOG_PATH }}
           retention-days: 0
+          
+      - name: Upload Documentation Artifact
+        uses: actions/upload-pages-artifact@v1.0.4
+        with:
+          path: ${{env.PUBLISH_DOCUMENTATION_PATH }}
           
       - name: Upload to GitHub Releases (on Tag)
         uses: softprops/action-gh-release@v0.1.14
