@@ -4,7 +4,7 @@
   <img width="256" height="256" alt="Logo" src="https://github.com/jpiolho/QuakeReloaded/blob/main/QuakeReloaded/Preview.png">
 </p>
 
-This is just a base that contains a lot of useful code for other mods. See of a list of mods using QuakeReloaded [here](https://jpiolho.github.io/QuakeReloaded/mods.html)
+<p align="center">This is just a base mod that contains a lot of useful code for other mods. See of a list of mods using QuakeReloaded [here](https://jpiolho.github.io/QuakeReloaded/mods.html)</p>
 
 ## For players
 * Head over to the [Releases](https://github.com/jpiolho/QuakeReloaded/releases) and download the latest QuakeReloaded 7z file (NOT the interfaces file)
