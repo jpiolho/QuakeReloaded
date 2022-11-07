@@ -48,5 +48,7 @@ public class NativeString : IDisposable
         GC.SuppressFinalize(this);
     }
 
+    public IntPtr ToPointer() => _pointer;
+
     public static implicit operator IntPtr(NativeString nstr) => nstr._pointer;
 }
