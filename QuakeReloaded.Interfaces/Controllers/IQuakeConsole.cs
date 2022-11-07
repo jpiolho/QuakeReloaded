@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QuakeReloaded.Interfaces
 {
+    /// <summary>
+    /// Provides access to the game console.
+    /// </summary>
     public interface IQuakeConsole
     {
         /// <summary>
