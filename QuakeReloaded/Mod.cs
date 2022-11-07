@@ -31,6 +31,9 @@ namespace QuakeReloaded
             typeof(IQuakeReloaded)
         };
 
+        public override bool CanUnload() => false;
+        public override bool CanSuspend() => false;
+
         /// <summary>
         /// Provides access to the mod loader API.
         /// </summary>
