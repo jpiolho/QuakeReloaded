@@ -27,11 +27,39 @@ namespace QuakeReloaded.Interfaces
         /// <param name="defaultValue">The default value of the cvar if it isn't set, value is invalid or doesn't exist.</param>
         /// <returns>The value of the cvar. 0 = false, 1 = true</returns>
         bool GetBoolValue(string name, bool defaultValue = false);
+        /// <summary>
+        /// Gets a boolean value from a cvar using a cvar pointer.
+        /// </summary>
+        /// <param name="pointer">Pointer to the cvar</param>
+        /// <param name="defaultValue">The default value of the cvar if it isn't set, value is invalid or doesn't exist.</param>
+        /// <returns>The value of the cvar. 0 = false, 1 = true</returns>
         bool GetBoolValue(IntPtr pointer, bool defaultValue = false);
 
+        /// <summary>
+        /// Gets a float value from a cvar.
+        /// </summary>
+        /// <param name="name">Name of the cvar</param>
+        /// <param name="defaultValue">The default value for the cvar if it isn't set, value is invalid or doesn't exist.</param>
+        /// <returns>The value of the cvar</returns>
         float GetFloatValue(string name, float defaultValue = 0.0f);
+        /// <summary>
+        /// Gets a float value from a cvar.
+        /// </summary>
+        /// <param name="pointer">Pointer to the cvar</param>
+        /// <param name="defaultValue">The default value for the cvar if it isn't set, value is invalid or doesn't exist.</param>
+        /// <returns>The value of the cvar</returns>
         float GetFloatValue(IntPtr pointer, float defaultValue = 0.0f);
 
+        /// <summary>
+        /// Registers a new cvar. If you're using <see cref="CvarFlags.Saved"/> make sure to register it in PreInitialize.
+        /// </summary>
+        /// <param name="name">Name of the cvar</param>
+        /// <param name="defaultValue">The initial value of the cvar</param>
+        /// <param name="description">Description that shows in the console</param>
+        /// <param name="flags">Attributes of the cvar</param>
+        /// <param name="min">Minimum cvar value</param>
+        /// <param name="max">Maximum cvar value</param>
+        /// <returns>Pointer to the created cvar</returns>
         IntPtr Register(string name, string defaultValue, string description = "", CvarFlags flags = CvarFlags.None, float min = 0f, float max = 1f);
 
         #region Experimental
