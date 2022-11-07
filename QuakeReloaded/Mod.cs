@@ -97,15 +97,16 @@ namespace QuakeReloaded
 
             CreateAndRegisterControllers();
 
-            _events._EXPERIMENTAL_RegisterOnInitialized(OnInitialized);
+            _events.RegisterOnInitialized(() =>
+            {
+                _console.PrintLine("QuakeReloaded initialized", 0, 255, 0);
+            });
+            _events.RegisterOnPreInitialize(() =>
+            {
+                _cvars.Register("qr", "1", "QuakeReloaded", CvarFlags.Integer | CvarFlags.Constant);
+            });
         }
 
-        private void OnInitialized()
-        {
-            _console.PrintLine("QuakeReloaded initialized", 0, 255, 0);
-
-            _cvars.Register("qr", "1", "QuakeReloaded", CvarFlags.Integer | CvarFlags.Constant);
-        }
 
         [MemberNotNull(nameof(_events))]
         [MemberNotNull(nameof(_console))]
