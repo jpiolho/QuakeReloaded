@@ -19,5 +19,9 @@ namespace QuakeReloaded.Interfaces
         /// Access to <see cref="IQuakeCvars"/>
         /// </summary>
         IQuakeCvars Cvars { get; }
+        /// <summary>
+        /// Access to <see cref="IQuakeUI"/>
+        /// </summary>
+        IQuakeUI UI { get; }
     }
 }
