@@ -82,6 +82,9 @@ internal class QuakeCvars : IQuakeCvars
     }
     public bool GetBoolValue(IntPtr pointer, bool defaultValue = false)
     {
+        if (pointer == IntPtr.Zero)
+            return defaultValue;
+
         return _funcCvarGetValueBool(pointer, defaultValue ? 1u : 0u);
     }
 
