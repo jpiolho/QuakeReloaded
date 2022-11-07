@@ -14,5 +14,6 @@ namespace QuakeReloaded.Controllers
         public IQuakeCvars Cvars { get; internal set; } = default!;
 
         public IQuakeConsole Console { get; internal set; } = default!;
+        public IQuakeUI UI { get; internal set; } = default!;
     }
 }

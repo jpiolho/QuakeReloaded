@@ -28,6 +28,7 @@ namespace QuakeReloaded
             typeof(IQuakeConsole), 
             typeof(IQuakeEvents),
             typeof(IQuakeCvars),
+            typeof(IQuakeUI),
             typeof(IQuakeReloaded)
         };
 
@@ -78,6 +79,7 @@ namespace QuakeReloaded
         private QuakeConsole _console;
         private QuakeCvars _cvars;
         private QuakeEvents _events;
+        private QuakeUI _ui;
         private QuakeReloadedAPI _api; 
 
         public Mod(ModContext context)
@@ -108,6 +110,7 @@ namespace QuakeReloaded
         [MemberNotNull(nameof(_events))]
         [MemberNotNull(nameof(_console))]
         [MemberNotNull(nameof(_cvars))]
+        [MemberNotNull(nameof(_ui))]
         private void CreateAndRegisterControllers()
         {
             var currentProcess = Process.GetCurrentProcess();
@@ -123,12 +126,14 @@ namespace QuakeReloaded
             _console = new QuakeConsole(_hooks!, quakeScanner);
             _cvars = new QuakeCvars(_hooks!, quakeScanner);
             _events = new QuakeEvents(_hooks!,quakeScanner);
+            _ui = new QuakeUI(_hooks!, quakeScanner);
 
             _api = new QuakeReloadedAPI()
             {
                 Console = _console,
                 Cvars = _cvars,
-                Events = _events
+                Events = _events,
+                UI = _ui
             };
 
 
@@ -138,6 +143,7 @@ namespace QuakeReloaded
             _modLoader.AddOrReplaceController<IQuakeConsole>(_owner, _console);
             _modLoader.AddOrReplaceController<IQuakeEvents>(_owner, _events);
             _modLoader.AddOrReplaceController<IQuakeCvars>(_owner, _cvars);
+            _modLoader.AddOrReplaceController<IQuakeUI>(_owner, _ui);
             _modLoader.AddOrReplaceController<IQuakeReloaded>(_owner, _api);
         }
 
