@@ -32,6 +32,9 @@ env:
   VERSIONPREFIX: ${{ github.ref_name }}
 
 jobs:
+  generate_documentation:
+    uses: jpiolho/QuakeReloaded/.github/workflows/documentation.yml@main
+        
   build:
     runs-on: windows-latest
     defaults:
@@ -97,9 +100,7 @@ jobs:
             -GitHubUserName "$env:GITHUB_REPOSITORY_OWNER" `
             -GitHubRepoName "$env:GITHUB_REPOSITORY"
       
-      - name: Generate Documentation
-        uses: jpiolho/QuakeReloaded/.github/workflows/documentation.yml@main
-        
+      
       - name: "Interfaces: Publish to Nuget"
         working-directory: ${{ env.PATH_INTERFACES }}
         run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
