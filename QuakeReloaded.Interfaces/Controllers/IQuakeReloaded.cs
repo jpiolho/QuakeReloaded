@@ -23,5 +23,9 @@ namespace QuakeReloaded.Interfaces
         /// Access to <see cref="IQuakeUI"/>
         /// </summary>
         IQuakeUI UI { get; }
+        /// <summary>
+        /// Access to <see cref="IQuakeGame"/>
+        /// </summary>
+        IQuakeGame Game { get; }
     }
 }

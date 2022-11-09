@@ -29,6 +29,7 @@ namespace QuakeReloaded
             typeof(IQuakeEvents),
             typeof(IQuakeCvars),
             typeof(IQuakeUI),
+            typeof(IQuakeGame),
             typeof(IQuakeReloaded)
         };
 
@@ -80,6 +81,7 @@ namespace QuakeReloaded
         private QuakeCvars _cvars;
         private QuakeEvents _events;
         private QuakeUI _ui;
+        private QuakeGame _game;
         private QuakeReloadedAPI _api; 
 
         public Mod(ModContext context)
@@ -100,6 +102,8 @@ namespace QuakeReloaded
             _events.RegisterOnInitialized(() =>
             {
                 _console.PrintLine("QuakeReloaded initialized", 0, 255, 0);
+
+                _console.PrintLine($"Hostname: {_cvars.GetStringValue("hostname")}");
             });
             _events.RegisterOnPreInitialize(() =>
             {
@@ -112,6 +116,7 @@ namespace QuakeReloaded
         [MemberNotNull(nameof(_console))]
         [MemberNotNull(nameof(_cvars))]
         [MemberNotNull(nameof(_ui))]
+        [MemberNotNull(nameof(_game))]
         private void CreateAndRegisterControllers()
         {
             var currentProcess = Process.GetCurrentProcess();
@@ -128,13 +133,15 @@ namespace QuakeReloaded
             _cvars = new QuakeCvars(_hooks!, quakeScanner);
             _events = new QuakeEvents(_hooks!,quakeScanner);
             _ui = new QuakeUI(_hooks!, quakeScanner);
+            _game = new QuakeGame(_hooks!, quakeScanner);
 
             _api = new QuakeReloadedAPI()
             {
                 Console = _console,
                 Cvars = _cvars,
                 Events = _events,
-                UI = _ui
+                UI = _ui,
+                Game = _game
             };
 
 
@@ -145,6 +152,7 @@ namespace QuakeReloaded
             _modLoader.AddOrReplaceController<IQuakeEvents>(_owner, _events);
             _modLoader.AddOrReplaceController<IQuakeCvars>(_owner, _cvars);
             _modLoader.AddOrReplaceController<IQuakeUI>(_owner, _ui);
+            _modLoader.AddOrReplaceController<IQuakeGame>(_owner, _game);
             _modLoader.AddOrReplaceController<IQuakeReloaded>(_owner, _api);
         }
 
