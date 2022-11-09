@@ -34,6 +34,7 @@ env:
 jobs:
   generate_documentation:
     uses: jpiolho/QuakeReloaded/.github/workflows/documentation.yml@main
+    secrets: inherit
         
   build:
     runs-on: windows-latest
