@@ -109,6 +109,18 @@ internal class QuakeCvars : IQuakeCvars
         return value == DefaultValuePlaceholder ? defaultValue : value;
     }
 
+
+    public string GetStringValue(string name, string defaultValue = "") => GetStringValue(GetPointer(name), defaultValue);
+    public string GetStringValue(IntPtr pointer, string defaultValue = "")
+    {
+        if (pointer == IntPtr.Zero)
+            return defaultValue;
+
+        unsafe {
+            return Marshal.PtrToStringAnsi(new IntPtr(**(char***)(pointer.ToInt64() + 96))) ?? defaultValue;
+        }
+    }
+
     public bool Exists(string name) => GetPointer(name) != IntPtr.Zero;
 
     public IntPtr Register(string name, string defaultValue, string description = "", CvarFlags flags = CvarFlags.None, float min = 0f, float max = 1f) => _EXPERIMENTAL_Register(name, defaultValue, description, (int)flags, min, max);
