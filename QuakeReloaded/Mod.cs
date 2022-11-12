@@ -102,8 +102,6 @@ namespace QuakeReloaded
             _events.RegisterOnInitialized(() =>
             {
                 _console.PrintLine("QuakeReloaded initialized", 0, 255, 0);
-
-                _console.PrintLine($"Hostname: {_cvars.GetStringValue("hostname")}");
             });
             _events.RegisterOnPreInitialize(() =>
             {
