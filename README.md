@@ -12,4 +12,17 @@
 * Enable the mod in Reloaded and make sure it has priority over other mods.
 
 ## For modders
-* Head over to the [QuakeReloaded Page](https://jpiolho.github.io/QuakeReloaded/) page
+
+### How to create a mod using QuakeReloaded
+1. Setup a project with the Reloaded template. You can find [documentation here](https://reloaded-project.github.io/Reloaded-II/DevelopmentEnvironmentSetup/)
+2. In your project, include [QuakeReloaded.Interfaces nuget package](https://www.nuget.org/packages/QuakeReloaded.Interfaces).
+3. Edit your ModConfig.json:
+   1. Set the `ModID` with the following name convention (remember all lower case and no spaces): `quakeenhanced.mod.<your mod name>`
+   2. Add `quakeenhanced.mod.quakereloaded` to `ModDependencies`
+   3. Add `quake_x64_steam.exe` to `SupportedAppId`
+4. To get access to QuakeReloaded API use the following code in your Mod constructor:
+   ```csharp
+   if (!(_modLoader.GetController<IQuakeReloaded>()?.TryGetTarget(out var qreloaded) ?? false))
+       throw new Exception("Could not get QuakeReloaded API. Are you sure QuakeReloaded is installed & loaded before this mod?");
+   ```
+5. Refer to [other mods](https://jpiolho.github.io/QuakeReloaded/mods.html) source code and the [QuakeReloaded API documentation](https://jpiolho.github.io/QuakeReloaded/api.html).
