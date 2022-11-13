@@ -11,8 +11,10 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
 {
     private unsafe int* _resolutionWidth, _resolutionHeight;
 
-    private unsafe void** _globalFont, _globalUIContext;
+    private unsafe void** _globalFont, _globalFontAlt;
+    private unsafe void** _globalUIContext;
     private unsafe float* _globalFontSize;
+    private unsafe int* _globalFontSizeAlt;
 
     private IntPtr _drawTextPositionArray;
 
@@ -48,7 +50,26 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
                 _globalFontSize = (float*)(mainModule.BaseAddress + result.Offset + offset + 5 + 8);
             }
         });
-        
+
+        // Get alt font object
+        scanner.Scan("48 89 05 ?? ?? ?? ?? 48 8D 4D ??", (mainModule, result) =>
+        {
+            unsafe
+            {
+                int offset = *(int*)(mainModule.BaseAddress + result.Offset + 3);
+                _globalFontAlt = (void**)(mainModule.BaseAddress + result.Offset + offset + 7);
+            }
+        });
+
+        // Get alt font size object
+        scanner.Scan("8B 05 ?? ?? ?? ?? 48 89 9C 24 ?? ?? ?? ?? 48 89 BC 24 ?? ?? ?? ??", (mainModule, result) =>
+        {
+            unsafe
+            {
+                int offset = *(int*)(mainModule.BaseAddress + result.Offset + 2);
+                _globalFontSizeAlt = (int*)(mainModule.BaseAddress + result.Offset + offset + 6);
+            }
+        });
 
         // Get global ui context
         scanner.Scan("48 89 05 ?? ?? ?? ?? 41 BE 01 00 00 00 4C 8B 6D ??", (mainModule, result) =>
@@ -109,10 +130,23 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
             position[0] = (float)x;
             position[1] = (float)y;
 
-            float size = *_globalFontSize;
+
+            var altFont = _api.Cvars.GetBoolValue("ui_acc_alttypeface", false);
+
+            float size = altFont ? GetAltFontSize() : *_globalFontSize;
+            IntPtr font = altFont ? new IntPtr(* _globalFontAlt) : new IntPtr(*_globalFont);
             uint color = 0xFFFFFFFF;
 
-            _funcDrawText.Invoke(new IntPtr(*_globalFont), new IntPtr(*_globalUIContext), ns, _drawTextPositionArray, *(int*)&size, 0, new IntPtr(&color));
+
+            //IntPtr font = new IntPtr(*_globalFont);
+            _funcDrawText.Invoke(font, new IntPtr(*_globalUIContext), ns, _drawTextPositionArray, *(int*)&size, 0, new IntPtr(&color));
         }
+    }
+
+
+    private unsafe float GetAltFontSize()
+    {
+        var size = *_globalFontSizeAlt;
+        return size / 1080f;
     }
 }
