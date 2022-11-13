@@ -1,7 +1,6 @@
 ﻿using QuakeReloaded.Interfaces;
 using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
-using Reloaded.Hooks.Definitions.Structs;
 using Reloaded.Hooks.Definitions.X64;
 using System.Runtime.InteropServices;
 
@@ -116,7 +115,8 @@ internal class QuakeCvars : QuakeControllerBase, IQuakeCvars
         if (pointer == IntPtr.Zero)
             return defaultValue;
 
-        unsafe {
+        unsafe
+        {
             return Marshal.PtrToStringAnsi(new IntPtr(**(char***)(pointer.ToInt64() + 96))) ?? defaultValue;
         }
     }
@@ -140,7 +140,7 @@ internal class QuakeCvars : QuakeControllerBase, IQuakeCvars
         {
             *(void**)(_objCvarList + 24) = null;
         }
-        
+
         return cvarPtr;
     }
 

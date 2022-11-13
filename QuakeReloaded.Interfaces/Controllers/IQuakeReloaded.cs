@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuakeReloaded.Interfaces
+﻿namespace QuakeReloaded.Interfaces
 {
     /// <summary>
     /// The main interface of QuakeReloaded. Provides easy access to all the APIs.

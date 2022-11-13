@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace QuakeReloaded.Interfaces
 {
@@ -14,7 +12,7 @@ namespace QuakeReloaded.Interfaces
         /// No flags
         /// </summary>
         None = 0,
-        
+
         /// <summary>
         /// The cvar type is boolean. It can only be 0 or 1.
         /// </summary>

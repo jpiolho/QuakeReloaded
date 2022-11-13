@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuakeReloaded.Interfaces
+﻿namespace QuakeReloaded.Interfaces
 {
     /// <summary>
     /// Provides access to the game console.

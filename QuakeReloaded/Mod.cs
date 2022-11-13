@@ -1,20 +1,12 @@
-﻿using Iced.Intel;
-using QuakeReloaded.Configuration;
+﻿using QuakeReloaded.Configuration;
 using QuakeReloaded.Controllers;
 using QuakeReloaded.Interfaces;
 using QuakeReloaded.Template;
 using QuakeReloaded.Utilities;
-using Reloaded.Hooks.Definitions;
-using Reloaded.Hooks.Definitions.X64;
-using Reloaded.Hooks.ReloadedII.Interfaces;
-using Reloaded.Memory.Sigscan;
-using Reloaded.Memory.Sigscan.Definitions;
 using Reloaded.Memory.SigScan.ReloadedII.Interfaces;
 using Reloaded.Mod.Interfaces;
-using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using IReloadedHooks = Reloaded.Hooks.Definitions.IReloadedHooks;
 
 namespace QuakeReloaded
@@ -24,8 +16,8 @@ namespace QuakeReloaded
     /// </summary>
     public class Mod : ModBase, IExports // <= Do not Remove.
     {
-        public Type[] GetTypes() => new[] { 
-            typeof(IQuakeConsole), 
+        public Type[] GetTypes() => new[] {
+            typeof(IQuakeConsole),
             typeof(IQuakeEvents),
             typeof(IQuakeCvars),
             typeof(IQuakeUI),
@@ -82,7 +74,7 @@ namespace QuakeReloaded
         private QuakeEvents _events;
         private QuakeUI _ui;
         private QuakeGame _game;
-        private QuakeReloadedAPI _api; 
+        private QuakeReloadedAPI _api;
 
         public Mod(ModContext context)
         {
@@ -129,14 +121,14 @@ namespace QuakeReloaded
             // Create controllers
             _api = new QuakeReloadedAPI();
 
-            _api.Console = _console = new QuakeConsole(_api,_hooks!, quakeScanner);
-            _api.Cvars = _cvars = new QuakeCvars(_api,_hooks!, quakeScanner);
-            _api.Events = _events = new QuakeEvents(_api,_hooks!,quakeScanner);
-            _api.UI = _ui = new QuakeUI(_api,_hooks!, quakeScanner);
-            _api.Game = _game = new QuakeGame(_api,_hooks!, quakeScanner);
+            _api.Console = _console = new QuakeConsole(_api, _hooks!, quakeScanner);
+            _api.Cvars = _cvars = new QuakeCvars(_api, _hooks!, quakeScanner);
+            _api.Events = _events = new QuakeEvents(_api, _hooks!, quakeScanner);
+            _api.UI = _ui = new QuakeUI(_api, _hooks!, quakeScanner);
+            _api.Game = _game = new QuakeGame(_api, _hooks!, quakeScanner);
 
 
-            
+
 
             // Register controllers
             _modLoader.AddOrReplaceController<IQuakeConsole>(_owner, _console);

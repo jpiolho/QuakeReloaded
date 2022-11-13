@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace QuakeReloaded.Interfaces
+﻿namespace QuakeReloaded.Interfaces
 {
     /// <summary>
     /// Provides things that are related to the UI of the game. Affects the client only.

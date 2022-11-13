@@ -3,7 +3,6 @@ using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 using Reloaded.Hooks.Definitions.X64;
 using System.Runtime.InteropServices;
-using System;
 
 namespace QuakeReloaded.Controllers;
 
@@ -80,7 +79,7 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
                 _globalUIContext = (void**)(mainModule.BaseAddress + result.Offset + offset + 7);
             }
         });
-        
+
 
         // Scan for resolution globals
         scanner.Scan("44 8B 05 ?? ?? ?? ?? 45 03 C1 45 03 C7 8B 0D ?? ?? ?? ?? 8B 15 ?? ?? ?? ?? 03 D1 89 4C 24 ?? 44 89 4C 24 ?? 89 54 24 ?? 44 89 44 24 ?? 48 8B 03", (mainModule, result) =>
@@ -134,7 +133,7 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
             var altFont = _api.Cvars.GetBoolValue("ui_acc_alttypeface", false);
 
             float size = altFont ? GetAltFontSize() : *_globalFontSize;
-            IntPtr font = altFont ? new IntPtr(* _globalFontAlt) : new IntPtr(*_globalFont);
+            IntPtr font = altFont ? new IntPtr(*_globalFontAlt) : new IntPtr(*_globalFont);
             uint color = 0xFFFFFFFF;
 
 

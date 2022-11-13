@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuakeReloaded.Interfaces
+﻿namespace QuakeReloaded.Interfaces
 {
     public interface IQuakeCallbackReference
     {
