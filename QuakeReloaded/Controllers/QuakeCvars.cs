@@ -121,6 +121,9 @@ internal class QuakeCvars : QuakeControllerBase, IQuakeCvars
         }
     }
 
+    public int GetIntValue(string name, int defaultValue = 0) => (int)GetFloatValue(name, defaultValue));
+    public int GetIntValue(nint pointer, int defaultValue = 0) => (int)GetFloatValue(pointer, defaultValue));
+
     public bool Exists(string name) => GetPointer(name) != IntPtr.Zero;
 
     public IntPtr Register(string name, string defaultValue, string description = "", CvarFlags flags = CvarFlags.None, float min = 0f, float max = 1f) => _EXPERIMENTAL_Register(name, defaultValue, description, (int)flags, min, max);

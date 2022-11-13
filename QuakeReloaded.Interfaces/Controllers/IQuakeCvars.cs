@@ -67,6 +67,21 @@ namespace QuakeReloaded.Interfaces
         string GetStringValue(string name, string defaultValue = "");
 
         /// <summary>
+        /// Gets an <see cref="int"/> value from a cvar.
+        /// </summary>
+        /// <param name="name">Name of the cvar</param>
+        /// <param name="defaultValue">The default value for the cvar if it isn't set, value is invalid or doesn't exist.</param>
+        /// <returns>The value of the cvar, as a <see cref="float"/></returns>
+        int GetIntValue(string name, int defaultValue = 0);
+        /// <summary>
+        /// Gets an <see cref="int"/> value from a cvar.
+        /// </summary>
+        /// <param name="pointer">Pointer to the cvar</param>
+        /// <param name="defaultValue">The default value for the cvar if it isn't set, value is invalid or doesn't exist.</param>
+        /// <returns>The value of the cvar, as a <see cref="float"/></returns>
+        int GetIntValue(IntPtr pointer, int defaultValue = 0);
+
+        /// <summary>
         /// Registers a new cvar. If you're using <see cref="CvarFlags.Saved"/> make sure to register it in PreInitialize.
         /// </summary>
         /// <param name="name">Name of the cvar</param>
