@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace QuakeReloaded.Controllers;
 
-internal class QuakeCvars : IQuakeCvars
+internal class QuakeCvars : QuakeControllerBase, IQuakeCvars
 {
     [Function(CallingConventions.Microsoft)]
     private delegate bool FuncCvarGetValueBool(IntPtr cvar, uint defaultValue);
@@ -25,7 +25,7 @@ internal class QuakeCvars : IQuakeCvars
     private IntPtr _objCvarRegistry;
     private IntPtr _objCvarList;
 
-    internal QuakeCvars(IReloadedHooks hooks, QuakeScanner scanner)
+    internal QuakeCvars(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
         // Scan for cvar get bool value function
         scanner.Scan("40 57 41 56 41 57 48 83 EC 40 48 C7 44 24 ?? FE FF FF FF 48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 8B DA 48 8B F9 E8 ?? ?? ?? ?? 48 8B E8 4C 8D 3D ?? ?? ?? ?? 4C 89 7C 24 ?? 48 89 44 24 ?? 45 33 C0 48 8B D0 49 8B CF 4C 8B 0D ?? ?? ?? ?? 41 FF 51 ?? 90 8B 4F ?? 0F BA E1 08 73 ?? 8B D3 48 8B CF FF 57 ?? 48 8B C8 FF 15 ?? ?? ?? ?? 85 C0", (mainModule, result) =>

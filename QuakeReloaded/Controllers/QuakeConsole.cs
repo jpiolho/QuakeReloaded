@@ -5,7 +5,7 @@ using Reloaded.Hooks.Definitions.X64;
 
 namespace QuakeReloaded.Controllers;
 
-public class QuakeConsole : IQuakeConsole
+internal class QuakeConsole : QuakeControllerBase, IQuakeConsole
 {
     [Function(CallingConventions.Microsoft)]
     private delegate void FuncConsolePrint(IntPtr buffer, IntPtr color, IntPtr message);
@@ -13,8 +13,7 @@ public class QuakeConsole : IQuakeConsole
     private FuncConsolePrint _funcConsolePrint = default!;
     private IntPtr _objConsoleBuffer;
 
-
-    internal QuakeConsole(IReloadedHooks hooks, QuakeScanner scanner)
+    internal QuakeConsole(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
         // Scan console print function
         scanner.Scan("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 41 54 41 55 41 56 41 57 48 81 EC 20 02 00 00 49 8B E8", (mainModule, result) =>

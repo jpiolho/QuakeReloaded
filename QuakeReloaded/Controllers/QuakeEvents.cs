@@ -5,7 +5,7 @@ using Reloaded.Hooks.Definitions.X64;
 
 namespace QuakeReloaded.Controllers;
 
-class QuakeEvents : IQuakeEvents
+class QuakeEvents : QuakeControllerBase, IQuakeEvents
 {
     [Function(CallingConventions.Microsoft)]
     private delegate void HookInitializeQuake();
@@ -22,7 +22,7 @@ class QuakeEvents : IQuakeEvents
     private IHook<HookRenderFrame> _hookRenderFrame;
     private List<Action> _eventOnRenderFrame = new();
 
-    public QuakeEvents(IReloadedHooks hooks, QuakeScanner scanner)
+    internal QuakeEvents(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
         // Scan for initialize hook
         scanner.Scan("48 8B C4 55 41 54 41 55 41 56 41 57 48 8D 68 ?? 48 81 EC D0 00 00 00 48 C7 45 ?? FE FF FF FF 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 45 33 ED", (mainModule, result) =>

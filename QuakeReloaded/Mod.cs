@@ -127,20 +127,13 @@ namespace QuakeReloaded
             var quakeScanner = new QuakeScanner(mainModule, scanner);
 
             // Create controllers
-            _console = new QuakeConsole(_hooks!, quakeScanner);
-            _cvars = new QuakeCvars(_hooks!, quakeScanner);
-            _events = new QuakeEvents(_hooks!,quakeScanner);
-            _ui = new QuakeUI(_hooks!, quakeScanner);
-            _game = new QuakeGame(_hooks!, quakeScanner);
+            _api = new QuakeReloadedAPI();
 
-            _api = new QuakeReloadedAPI()
-            {
-                Console = _console,
-                Cvars = _cvars,
-                Events = _events,
-                UI = _ui,
-                Game = _game
-            };
+            _api.Console = _console = new QuakeConsole(_api,_hooks!, quakeScanner);
+            _api.Cvars = _cvars = new QuakeCvars(_api,_hooks!, quakeScanner);
+            _api.Events = _events = new QuakeEvents(_api,_hooks!,quakeScanner);
+            _api.UI = _ui = new QuakeUI(_api,_hooks!, quakeScanner);
+            _api.Game = _game = new QuakeGame(_api,_hooks!, quakeScanner);
 
 
             
