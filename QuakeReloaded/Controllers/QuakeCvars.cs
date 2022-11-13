@@ -121,8 +121,8 @@ internal class QuakeCvars : QuakeControllerBase, IQuakeCvars
         }
     }
 
-    public int GetIntValue(string name, int defaultValue = 0) => (int)GetFloatValue(name, defaultValue));
-    public int GetIntValue(nint pointer, int defaultValue = 0) => (int)GetFloatValue(pointer, defaultValue));
+    public int GetIntValue(string name, int defaultValue = 0) => (int)GetFloatValue(name, defaultValue);
+    public int GetIntValue(nint pointer, int defaultValue = 0) => (int)GetFloatValue(pointer, defaultValue);
 
     public bool Exists(string name) => GetPointer(name) != IntPtr.Zero;
 
