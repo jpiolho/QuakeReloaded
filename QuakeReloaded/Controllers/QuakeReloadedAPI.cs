@@ -11,5 +11,8 @@ namespace QuakeReloaded.Controllers
         public IQuakeConsole Console { get; internal set; } = default!;
         public IQuakeUI UI { get; internal set; } = default!;
         public IQuakeGame Game { get; internal set; } = default!;
+
+
+        internal QuakeEngine Engine { get; set; } = default!;
     }
 }

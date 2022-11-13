@@ -1,4 +1,5 @@
-﻿using QuakeReloaded.Interfaces;
+﻿using QuakeReloaded.Engine;
+using QuakeReloaded.Interfaces;
 using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 using Reloaded.Hooks.Definitions.X64;
@@ -22,7 +23,15 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
     private IHook<HookRenderFrame> _hookRenderFrame;
     private List<Action> _eventOnRenderFrame = new();
 
-    internal QuakeEvents(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
+    [Function(CallingConventions.Microsoft)]
+    private delegate int HookQCFunction(IntPtr arg1);
+    private IHook<HookQCFunction> _hookQCFunction;
+    private Dictionary<string, List<Func<EventHandling>>> _eventOnQCFunction = new();
+
+
+
+
+    internal QuakeEvents(QuakeReloadedAPI api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
         // Scan for initialize hook
         scanner.Scan("48 8B C4 55 41 54 41 55 41 56 41 57 48 8D 68 ?? 48 81 EC D0 00 00 00 48 C7 45 ?? FE FF FF FF 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 45 33 ED", (mainModule, result) =>
@@ -44,6 +53,15 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
             var offset = mainModule.BaseAddress + result.Offset;
             _hookRenderFrame = hooks.CreateHook<HookRenderFrame>(HookRenderFrameHandler, (long)offset).Activate();
         });
+
+        // Scan for QC function hook
+        scanner.Scan("48 89 5C 24 ?? 48 89 74 24 ?? 57 48 83 EC 20 4C 63 05 ?? ?? ?? ??", (mainModule, result) =>
+        {
+            var offset = mainModule.BaseAddress + result.Offset;
+            _hookQCFunction = hooks.CreateHook<HookQCFunction>(HookQCFunctionHandler, (long)offset).Activate();
+        });
+
+        
     }
 
     private void HookInitializeQuakeHandler()
@@ -64,6 +82,41 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
         _hookRenderFrame.OriginalFunction.Invoke(arg1, arg2, arg3, arg4);
     }
 
+    private int HookQCFunctionHandler(IntPtr arg1)
+    {
+        bool superceded = false;
+
+        unsafe {
+            var functionNamePtr = *(int*)(arg1 + 16);
+            var functionName = _api.Engine.GetPRString(functionNamePtr);
+
+            if (functionName != null) {
+                if(_eventOnQCFunction.TryGetValue(functionName, out var hooks))
+                {
+                    foreach(var hook in hooks)
+                    {
+                        var handling = hook();
+
+                        // Find a return symbol
+                        if (handling == EventHandling.Superceded)
+                        {
+                            superceded = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            var idx = _hookQCFunction.OriginalFunction.Invoke(arg1);
+
+            // If superceded, trick the engine to go to a "RET" opcode
+            if(superceded)
+                return EngineUtils.QCGetReturnStatementIndex(_api.Engine);
+
+            return idx;
+        }
+    }
+
     public IQuakeCallbackReference RegisterOnInitialized(Action callback)
     {
         _eventOnInitialized.Add(callback);
@@ -78,6 +131,15 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
     {
         _eventOnPreInitialize.Add(callback);
         return new QuakeCallbackReference(() => _eventOnPreInitialize.Remove(callback));
+    }
+
+    public IQuakeCallbackReference RegisterHandlerQCFunction(string functionName, Func<EventHandling> callback)
+    {
+        if (!_eventOnQCFunction.TryGetValue(functionName, out var list))
+            _eventOnQCFunction[functionName] = list = new List<Func<EventHandling>>();
+
+        list.Add(callback);
+        return new QuakeCallbackReference(() => _eventOnQCFunction[functionName]?.Remove(callback));
     }
 
     public void RaiseOnPreInitialize()

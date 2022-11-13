@@ -121,6 +121,7 @@ namespace QuakeReloaded
             // Create controllers
             _api = new QuakeReloadedAPI();
 
+            _api.Engine = new QuakeEngine(_api, _hooks!, quakeScanner);
             _api.Console = _console = new QuakeConsole(_api, _hooks!, quakeScanner);
             _api.Cvars = _cvars = new QuakeCvars(_api, _hooks!, quakeScanner);
             _api.Events = _events = new QuakeEvents(_api, _hooks!, quakeScanner);

@@ -6,9 +6,9 @@ namespace QuakeReloaded.Controllers;
 
 internal class QuakeControllerBase
 {
-    protected IQuakeReloaded _api;
+    protected QuakeReloadedAPI _api;
 
-    public QuakeControllerBase(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner)
+    public QuakeControllerBase(QuakeReloadedAPI api, IReloadedHooks hooks, QuakeScanner scanner)
     {
         _api = api;
     }

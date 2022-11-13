@@ -19,5 +19,12 @@ namespace QuakeReloaded.Interfaces
         /// Event called on every frame.
         /// </summary>
         IQuakeCallbackReference RegisterOnRenderFrame(Action callback);
+
+        /// <summary>
+        /// Registers a handler for when a specific QC function gets called
+        /// </summary>
+        /// <param name="functionName">Name of the QC function</param>
+        /// <param name="callback">The handler that will be executed</param>
+        IQuakeCallbackReference RegisterHandlerQCFunction(string functionName, Func<EventHandling> callback);
     }
 }

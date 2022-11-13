@@ -21,7 +21,7 @@ internal class QuakeUI : QuakeControllerBase, IQuakeUI
     private delegate void FuncDrawText(IntPtr font, IntPtr arg2, IntPtr text, IntPtr position, int size, int alignment, IntPtr color);
     private FuncDrawText _funcDrawText = default!;
 
-    public QuakeUI(IQuakeReloaded api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
+    public QuakeUI(QuakeReloadedAPI api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
         // Scan for function to draw text
         scanner.Scan("48 89 5C 24 ?? 48 89 74 24 ?? 48 89 7C 24 ?? 55 48 8B EC 48 83 EC 60 41 80 38 00 49 8B F9 48 8B F2 48 8B D9 0F 84 ?? ?? ?? ?? 49 C7 C1 FF FF FF FF 49 8B D0 E8 ?? ?? ?? ?? F3 0F 10 07 8B 45 ??", (mainModule, result) =>
