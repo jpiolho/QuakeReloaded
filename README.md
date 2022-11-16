@@ -27,6 +27,3 @@
        throw new Exception("Could not get QuakeReloaded API. Are you sure QuakeReloaded is installed & loaded before this mod?");
    ```
 5. Refer to [other mods](https://jpiolho.github.io/QuakeReloaded/mods.html) source code and the [QuakeReloaded API documentation](https://jpiolho.github.io/QuakeReloaded/api.html).
-
-
- <a href="r2:https://github.com/jpiolho/QuakeReloaded/releases/download/1.2.0/QuakeReloaded1.0.0.7z">Test Link</a>
