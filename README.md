@@ -7,6 +7,7 @@
 <p align="center">This is just a base mod that contains a lot of useful code for other mods. See of a list of mods using QuakeReloaded <a href="https://jpiolho.github.io/QuakeReloaded/mods.html">here</a></p>
 
 ## For players
+* Install [Reloaded-II](https://github.com/Reloaded-Project/Reloaded-II) if you don't have it
 * Head over to the [Releases](https://github.com/jpiolho/QuakeReloaded/releases) and download the latest QuakeReloaded 7z file (NOT the interfaces file)
 * Extract the 7zip file into `<Reloaded II path>/Mods/QuakeReloaded` (alternatively: `%RELOADEDIIMODS%/QuakeReloaded`)
 * Enable the mod in Reloaded and make sure it has priority over other mods.
@@ -26,3 +27,6 @@
        throw new Exception("Could not get QuakeReloaded API. Are you sure QuakeReloaded is installed & loaded before this mod?");
    ```
 5. Refer to [other mods](https://jpiolho.github.io/QuakeReloaded/mods.html) source code and the [QuakeReloaded API documentation](https://jpiolho.github.io/QuakeReloaded/api.html).
+
+
+ <a href="r2:https://github.com/jpiolho/QuakeReloaded/releases/download/1.2.0/QuakeReloaded1.0.0.7z">Test Link</a>
