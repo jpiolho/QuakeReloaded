@@ -1,0 +1,3 @@
+Installing mod with Reloaded-II...
+
+{% include_relative installmod.html %}
