@@ -94,7 +94,7 @@ jobs:
         run: dotnet build --configuration Release
       
       - name: "Set mod version in ModConfig.json"
-        working-directory ${{ env.PATH_CSPROJ }}
+        working-directory: ${{ env.PATH_CSPROJ }}
         run: |
             $json = ConvertFrom-Json (Get-Content .\ModConfig.json | Out-String)
             $json.ModVersion = "$env:RELEASE_TAG"
