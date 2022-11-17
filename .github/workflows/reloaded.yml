@@ -18,12 +18,14 @@ on:
 
 env: 
   PUBLISH_COMMON_PATH: ./Publish/ToUpload/
+  PUBLISH_GAMEBANANA_PATH: ./Publish/ToUpload/GameBanana
   PUBLISH_GITHUB_PATH: ./Publish/ToUpload/Generic
   PUBLISH_CHANGELOG_PATH: ./Publish/Changelog.md
   PUBLISH_DOCUMENTATION_PATH: ./Publish/Docs
   PUBLISH_PATH: ./Publish
   
   PATH_INTERFACES: ./QuakeReloaded.Interfaces
+  PATH_CSPROJ: ./QuakeReloaded
   
   RELOADEDIIMODS: .
   
@@ -91,12 +93,19 @@ jobs:
         working-directory: ${{ env.PATH_INTERFACES }}
         run: dotnet build --configuration Release
       
+      - name: "Set mod version in ModConfig.json"
+        working-directory ${{ env.PATH_CSPROJ }}
+        run: |
+            $json = ConvertFrom-Json (Get-Content .\ModConfig.json | Out-String)
+            $json.ModVersion = "$env:RELEASE_TAG"
+            ConvertTo-Json $json -Compress | Out-File .\ModConfig.json
+      
       - name: Build mod
         run: |
           ./Publish.ps1 `
             -ChangelogPath "$env:PUBLISH_CHANGELOG_PATH" `
             -PublishNuGet False `
-            -PublishGameBanana False `
+            -PublishGameBanana True `
             -ProjectPath "QuakeReloaded/QuakeReloaded.csproj" `
             -PackageName "QuakeReloaded" `
             -GitHubUserName "$env:GITHUB_REPOSITORY_OWNER" `
@@ -114,6 +123,15 @@ jobs:
           name: GitHub Release
           # A file, directory or wildcard pattern that describes what to upload
           path: ${{ env.PUBLISH_GITHUB_PATH }}/*
+      
+      - name: Upload GameBanana Release Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          # Artifact name
+          name: GameBanana Release
+          # A file, directory or wildcard pattern that describes what to upload
+          path: |
+            ${{ env.PUBLISH_GAMEBANANA_PATH }}/*
       
       - name: Upload Changelog Artifact
         uses: actions/upload-artifact@v3.1.1
