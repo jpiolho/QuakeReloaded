@@ -1,3 +1,5 @@
-Installing mod with Reloaded-II...
+# Installing mod with Reloaded-II...
 
-{% include_relative installmod.html %}
+If nothing happens, you might not have [Reloaded-II](https://github.com/Reloaded-Project/Reloaded-II) installed properly.
+
+{% include_relative installmod_script.html %}
