@@ -8,7 +8,7 @@
 
 ## For players
 * Install [Reloaded-II](https://github.com/Reloaded-Project/Reloaded-II) if you don't have it
-* Click <a href="https://jpiolho.github.io/QuakeReloaded/installmod.html?username=jpiolho&repo=QuakeReloaded&file=QuakeReloaded1.3.0.7z" target="_blank">**here**</a> to install the mod
+* Click <a href="https://jpiolho.github.io/QuakeReloaded/installmod.html?username=jpiolho&repo=QuakeReloaded&file=QuakeReloaded{tag}.7z&latestVersion=1" target="_blank">**here**</a> to install the mod
 
 #### Manual install
 * Head over to the [Releases](https://github.com/jpiolho/QuakeReloaded/releases) and download the latest QuakeReloaded 7z file (NOT the interfaces file)
