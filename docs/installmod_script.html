@@ -12,7 +12,7 @@
 	if(params.username || params.repo || params.file) {
 		if(params.latestVersion) {
 			// First fetch the latest 'tag', then build the filename
-			fetch(`https://github.com/${params.username}/${params.repo}/releases/latest/`).then((f) => {
+			fetch(`https://github.com/${params.username}/${params.repo}/releases/latest/`, { mode: 'no-cors' }).then((f) => {
 				let split = f.url.split("/");
 				let tag = split[split.length-1];
 				doClick(`r2:https://github.com/${params.username}/${params.repo}/releases/latest/download/${params.file.replace("{tag}",tag)}`);
