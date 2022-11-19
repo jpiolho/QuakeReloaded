@@ -16,7 +16,7 @@
 				let split = f.url.split("/");
 				let tag = split[split.length-1];
 				doClick(`r2:https://github.com/${params.username}/${params.repo}/releases/latest/download/${params.file.replace("{tag}",tag)}`);
-			}
+			});
 		}
 		else {
 			doClick(`r2:https://github.com/${params.username}/${params.repo}/releases/latest/download/${params.file}`);
