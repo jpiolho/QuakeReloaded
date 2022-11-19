@@ -12,9 +12,8 @@
 	if(params.username || params.repo || params.file) {
 		if(params.latestVersion) {
 			// First fetch the latest 'tag', then build the filename
-			fetch(`https://github.com/${params.username}/${params.repo}/releases/latest/`, { mode: 'no-cors', redirect: 'follow' }).then((f) => {
-				let split = f.url.split("/");
-				let tag = split[split.length-1];
+			fetch(`https://api.github.com/repos/${params.username}/${params.repo}/releases/latest`).then((response) => response.json()).then((f) => {
+				let tag = f.tag_name;
 				if(!tag) {
 					alert(`Could not find latest version of the mod ${params.username}/${params.repo}`);
 					return;
