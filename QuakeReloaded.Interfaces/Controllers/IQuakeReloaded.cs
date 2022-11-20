@@ -25,5 +25,9 @@
         /// Access to <see cref="IQuakeGame"/>
         /// </summary>
         IQuakeGame Game { get; }
+        /// <summary>
+        /// Access to <see cref="IQuakeClient"/>
+        /// </summary>
+        IQuakeClient Client { get; }
     }
 }
