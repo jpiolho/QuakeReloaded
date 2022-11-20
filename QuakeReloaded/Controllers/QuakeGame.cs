@@ -7,21 +7,10 @@ namespace QuakeReloaded.Controllers;
 
 internal class QuakeGame : QuakeControllerBase, IQuakeGame
 {
-    private unsafe double* _globalMapTime;
     private unsafe char** _globalGameDir;
 
     internal QuakeGame(QuakeReloadedAPI api, IReloadedHooks hooks, QuakeScanner scanner) : base(api, hooks, scanner)
     {
-        // Scan for global map time
-        scanner.Scan("F2 0F 10 15 ?? ?? ?? ?? 0F 28 C2 F2 0F 5E 05 ?? ?? ?? ?? F2 0F 2C D8 6B C3 3C 66 0F 6E C8 F3 0F E6 C9 F2 0F 5C D1 F2 0F 2C FA E8 ?? ?? ?? ??", (mainModule, result) =>
-        {
-            unsafe
-            {
-                int offset = *(int*)(mainModule.BaseAddress + result.Offset + 4);
-                _globalMapTime = (double*)(mainModule.BaseAddress + result.Offset + offset + 8);
-            }
-        });
-
         // Scan for global game dir
         scanner.Scan("48 8D 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 41 B9 D1 00 00 00", (mainModule, result) =>
         {
@@ -58,8 +47,9 @@ internal class QuakeGame : QuakeControllerBase, IQuakeGame
         {
             unsafe
             {
-                return (float)*_globalMapTime;
+                return (float)_api.Engine._globalClientState->time; // This should be changed to server time
             }
         }
     }
+
 }
