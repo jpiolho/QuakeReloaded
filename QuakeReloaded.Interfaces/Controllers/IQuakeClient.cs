@@ -51,7 +51,7 @@ namespace QuakeReloaded.Interfaces
         /// Gets if the UI should show intermission or not
         /// </summary>
         bool InIntermission { get; }
-        
+
         /// <summary>
         /// Gets how much time should be shown in the intermission
         /// </summary>

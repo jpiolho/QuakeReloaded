@@ -1,5 +1,4 @@
-﻿using QuakeReloaded.Engine;
-using QuakeReloaded.Interfaces;
+﻿using QuakeReloaded.Interfaces;
 using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 using Reloaded.Hooks.Definitions.X64;
@@ -61,7 +60,7 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
             _hookQCFunction = hooks.CreateHook<HookQCFunction>(HookQCFunctionHandler, (long)offset).Activate();
         });
 
-        
+
     }
 
     private void HookInitializeQuakeHandler()
@@ -86,14 +85,16 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
     {
         bool superceded = false;
 
-        unsafe {
+        unsafe
+        {
             var functionNamePtr = *(int*)(arg1 + 16);
             var functionName = _api.Engine.GetPRString(functionNamePtr);
 
-            if (functionName != null) {
-                if(_eventOnQCFunction.TryGetValue(functionName, out var hooks))
+            if (functionName != null)
+            {
+                if (_eventOnQCFunction.TryGetValue(functionName, out var hooks))
                 {
-                    foreach(var hook in hooks)
+                    foreach (var hook in hooks)
                     {
                         var handling = hook();
 
@@ -110,7 +111,7 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
             var idx = _hookQCFunction.OriginalFunction.Invoke(arg1);
 
             // If superceded, trick the engine to go to a "RET" opcode
-            if(superceded)
+            if (superceded)
                 return EngineUtils.QCGetReturnStatementIndex(_api.Engine);
 
             return idx;

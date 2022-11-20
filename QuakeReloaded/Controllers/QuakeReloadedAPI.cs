@@ -12,7 +12,7 @@ namespace QuakeReloaded.Controllers
         public IQuakeUI UI { get; internal set; } = default!;
         public IQuakeGame Game { get; internal set; } = default!;
         public IQuakeClient Client { get; set; } = default!;
-        
+
 
         internal QuakeEngine Engine { get; set; } = default!;
     }

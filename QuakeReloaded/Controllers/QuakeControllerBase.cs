@@ -1,5 +1,4 @@
-﻿using QuakeReloaded.Interfaces;
-using QuakeReloaded.Utilities;
+﻿using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 
 namespace QuakeReloaded.Controllers;

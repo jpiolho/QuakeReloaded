@@ -20,9 +20,9 @@ internal class QuakeClient : QuakeControllerBase, IQuakeClient
     public int Rockets { get { unsafe { return _api.Engine._globalClientState->stats.rockets; } } }
     public int Cells { get { unsafe { return _api.Engine._globalClientState->stats.cells; } } }
     public int Nails { get { unsafe { return _api.Engine._globalClientState->stats.nails; } } }
-    
+
     public float Time { get { unsafe { return (float)_api.Engine._globalClientState->time; } } }
-    
+
     public bool InIntermission { get { unsafe { return _api.Engine._globalClientState->intermission; } } }
     public float IntermissionTime { get { unsafe { return (float)_api.Engine._globalClientState->intermissionTime; } } }
 
@@ -34,5 +34,5 @@ internal class QuakeClient : QuakeControllerBase, IQuakeClient
     public float ViewHeight { get { unsafe { return _api.Engine._globalClientState->viewHeight; } } }
 
     public string? LevelName { get { unsafe { return Marshal.PtrToStringUTF8(_api.Engine._globalClientState->levelname); } } }
-    
+
 }

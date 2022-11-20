@@ -3,7 +3,6 @@ using QuakeReloaded.Engine;
 using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 using Reloaded.Hooks.Definitions.X64;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace QuakeReloaded;
