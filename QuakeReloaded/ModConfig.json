@@ -49,6 +49,6 @@
   "IsUniversalMod": false,
   "ModDependencies": [ "reloaded.sharedlib.hooks", "Reloaded.Memory.SigScan.ReloadedII" ],
   "OptionalDependencies": [],
-  "SupportedAppId": [ "quake_x64_steam.exe" ],
+  "SupportedAppId": [ "quake_x64_steam.exe", "quake_shipping_playfab_gog_x64.exe" ],
   "ProjectUrl": ""
 }

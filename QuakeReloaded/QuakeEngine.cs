@@ -1,5 +1,6 @@
 ﻿using QuakeReloaded.Controllers;
 using QuakeReloaded.Engine;
+using QuakeReloaded.Interfaces;
 using QuakeReloaded.Utilities;
 using Reloaded.Hooks.Definitions;
 using Reloaded.Hooks.Definitions.X64;
@@ -17,9 +18,19 @@ internal class QuakeEngine
     private unsafe EngineQCStatement** _globalPRStatements;
 
     public unsafe EngineClientState* _globalClientState;
+    public Platform Platform { get; private set; }
 
     internal QuakeEngine(QuakeReloadedAPI api, IReloadedHooks hooks, QuakeScanner scanner)
     {
+        // Load which platform the game is running on
+        Platform = Win32Utils.GetImageExportName(scanner.MainModule.BaseAddress) switch
+        {
+            string x when x.Equals("bastet_Shipping_Playfab_Steam_x64.exe", StringComparison.InvariantCultureIgnoreCase) => Platform.Steam,
+            string x when x.Equals("bastet_Shipping_Playfab_GOG_x64.exe", StringComparison.CurrentCultureIgnoreCase) => Platform.GOG,
+            _ => Platform.Unknown
+        };
+
+
         scanner.Scan("48 83 EC 28 48 63 CA", (mainModule, result) =>
         {
             var offset = mainModule.BaseAddress + result.Offset;
@@ -36,7 +47,7 @@ internal class QuakeEngine
         });
 
 
-        scanner.Scan("8B 05 ?? ?? ?? ?? FF C0 89 05 ?? ?? ?? ?? 83 F8 02", (mainModule, result) =>
+        scanner.Scan("8B 05 ?? ?? ?? ?? FF C0 89 05 ?? ?? ?? ?? 83 F8 02 0F 8E ?? ?? ?? ??", (mainModule, result) =>
         {
             unsafe
             {

@@ -22,6 +22,8 @@ internal class QuakeGame : QuakeControllerBase, IQuakeGame
         });
     }
 
+    public Platform Platform => _api.Engine.Platform;
+
     public string ModPath
     {
         get

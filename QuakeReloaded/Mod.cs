@@ -95,7 +95,7 @@ namespace QuakeReloaded
 
             _events.RegisterOnInitialized(() =>
             {
-                _console.PrintLine("QuakeReloaded initialized", 0, 255, 0);
+                _console.PrintLine($"QuakeReloaded initialized. Platform: {_game.Platform}", 0, 255, 0);
             });
             _events.RegisterOnPreInitialize(() =>
             {
@@ -131,8 +131,6 @@ namespace QuakeReloaded
             _api.UI = _ui = new QuakeUI(_api, _hooks!, quakeScanner);
             _api.Game = _game = new QuakeGame(_api, _hooks!, quakeScanner);
             _api.Client = _client = new QuakeClient(_api, _hooks!, quakeScanner);
-
-
 
 
             // Register controllers

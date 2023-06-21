@@ -47,7 +47,11 @@ class QuakeEvents : QuakeControllerBase, IQuakeEvents
         });
 
         // Scan for render frame hook
-        scanner.Scan("48 8B C4 55 53 41 56 48 8D 68 ??", (mainModule, result) =>
+        scanner.Scan(_api.Engine.Platform switch
+        {
+            Platform.GOG => "48 8B C4 53 55 48 81 EC E8 00 00 00",
+            _ => "48 8B C4 55 53 41 56 48 8D 68 ??"
+        }, (mainModule, result) =>
         {
             var offset = mainModule.BaseAddress + result.Offset;
             _hookRenderFrame = hooks.CreateHook<HookRenderFrame>(HookRenderFrameHandler, (long)offset).Activate();

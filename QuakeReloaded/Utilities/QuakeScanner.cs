@@ -9,6 +9,8 @@ namespace QuakeReloaded.Utilities
         private IStartupScanner _scanner;
         private ProcessModule _mainModule;
 
+        public ProcessModule MainModule => _mainModule;
+
         public QuakeScanner(ProcessModule mainModule, IStartupScanner startupScanner)
         {
             _mainModule = mainModule;

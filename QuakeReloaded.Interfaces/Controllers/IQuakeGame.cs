@@ -19,5 +19,10 @@
         /// Returns the current 'game' that's active. Eg: id1, ctf, hipnotic
         /// </summary>
         string Mod { get; }
+
+        /// <summary>
+        /// Returns the platform for which the game was compiled for
+        /// </summary>
+        Platform Platform { get; }
     }
 }
