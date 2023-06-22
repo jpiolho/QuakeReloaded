@@ -50,7 +50,7 @@ jobs:
       run: dotnet build --configuration Release
       
     - name: Generate Documentation
-      run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.0/QuakeReloaded.Interfaces.dll" "${{ env.GENERATED_DOC_PATH }}"
+      run: xmldoc2md "${{ env.PATH_INTERFACES }}/bin/Release/netstandard2.1/QuakeReloaded.Interfaces.dll" "${{ env.GENERATED_DOC_PATH }}"
       
     - name: Rename documentation entry point
       working-directory: ${{ env.GENERATED_DOC_PATH }}
