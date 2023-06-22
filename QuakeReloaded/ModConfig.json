@@ -40,10 +40,6 @@
       "RepositoryName": "QuakeReloaded",
       "UseReleaseTag": true,
       "AssetFileName": "Mod.zip"
-    },
-    "GameBanana": {
-      "ItemType": "Mod",
-      "ItemId": 412540
     }
   },
   "IsUniversalMod": false,
